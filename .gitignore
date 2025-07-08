@@ -1,0 +1,67 @@
+# Diretórios de build
+/build/
+/out/
+/target/
+
+# Configurações do IntelliJ IDEA
+.idea/
+/*.iml
+*.iws
+*.ipr
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.bak
+*.swp
+*~
+
+# Arquivos de execução
+*.class
+*.jar
+*.war
+*.ear
+
+# Diretórios do Gradle
+.gradle/
+/build/
+
+# Arquivos de cache do Gradle
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Wrapper do Gradle (mantém os arquivos necessários)
+.gradle/
+/gradle-app.setting
+
+# Ambiente
+.env
+*.env
+
+# Configuração local de execução
+*.local
+*.launch
+*.settings/
+
+# Arquivos de IDE
+.vscode/
+
+# Testes temporários
+test-output/
+
+# Arquivos gerados pelo compilador
+*.class
+
+# Arquivos de cobertura de testes
+*.exec
+jacoco.exec
+
+# Arquivos de banco em memória (caso você use H2, por exemplo)
+*.mv.db
+*.h2.db
