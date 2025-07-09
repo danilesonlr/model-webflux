@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("Pessoa")
+@RequestMapping("pessoa")
 @RequiredArgsConstructor
 @Tag(name = "Pessoas", description = "Operações relacionadas a pessoas")
 

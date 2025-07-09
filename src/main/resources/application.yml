@@ -21,5 +21,10 @@ spring:
       password: teste123
       authentication-database: springWebFlux
 
+springdoc:
+  default-produces-media-type: application/json
+  api-docs:
+    version: openapi_3_0
+
 
 

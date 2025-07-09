@@ -38,7 +38,10 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
 	/*SWAGGER */
-	implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.1.0'
+	//Tive problema com essa versão quando coloquei o global exception handler
+	//implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.1.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.9'
+
 
 	//Blockhound
 	implementation 'io.projectreactor.tools:blockhound:1.0.8.RELEASE'
