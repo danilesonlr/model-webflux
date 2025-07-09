@@ -1,8 +1,7 @@
-package br.com.webflux.model_webflux.infrastructure.gateway;
+package br.com.webflux.model_webflux.infrastructure.adapter;
 
-import br.com.webflux.model_webflux.application.gateway.PessoaRepositoryGateway;
+import br.com.webflux.model_webflux.application.port.PessoaRepositoryPort;
 import br.com.webflux.model_webflux.domain.entities.Pessoa;
-import br.com.webflux.model_webflux.domain.exception.BusinessException;
 import br.com.webflux.model_webflux.infrastructure.mapper.PessoaMapper;
 import br.com.webflux.model_webflux.infrastructure.repository.PessoaRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PessoaRepositoryGatewayImpl implements PessoaRepositoryGateway {
+public class PessoaRepositoryAdapter implements PessoaRepositoryPort {
   private final PessoaRepository pessoaRepository;
 
   @Override

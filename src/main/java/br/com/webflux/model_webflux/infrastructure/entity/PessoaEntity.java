@@ -9,5 +9,5 @@ import java.util.UUID;
 
 //@Table("Pessoa")
 @Document(collection = "pessoa")
-public record PessoaEntity( String nome, String cpf, String email, Integer idade) {
+public record PessoaEntity(String nome, String cpf, String email, Integer idade, String cep) {
 }

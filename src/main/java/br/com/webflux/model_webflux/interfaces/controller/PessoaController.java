@@ -1,5 +1,6 @@
 package br.com.webflux.model_webflux.interfaces.controller;
 
+import br.com.webflux.model_webflux.application.EnderecoUseCase;
 import br.com.webflux.model_webflux.application.PessoaUseCase;
 import br.com.webflux.model_webflux.interfaces.dto.PessoaDTO;
 import br.com.webflux.model_webflux.interfaces.mapper.PessoaDTOMapper;
@@ -22,8 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class PessoaController {
 
   private final PessoaUseCase pessoaUseCase;
+  private final EnderecoUseCase enderecoUseCase;
 
-  @PostMapping
+  @PostMapping("/save/pessoa")
   //@ResponseStatus(HttpStatus.NO_CONTENT)
   @Operation(summary = "Salvar pessoa", description = "Salva uma nova pessoa.")
   public Object save(@RequestBody PessoaDTO pessoaDTO) {
@@ -34,5 +36,12 @@ public class PessoaController {
   @Operation(summary = "Buscar todos", description = "Buscar todos as pessoas.")
   public Object findAll() {
     return pessoaUseCase.findAll();
+  }
+
+  @PostMapping("save/endereco")
+  //@ResponseStatus(HttpStatus.NO_CONTENT)
+  @Operation(summary = "Salvar pessoa", description = "Salva uma nova pessoa.")
+  public Object save( String cep) {
+    return enderecoUseCase.save(cep);
   }
 }

@@ -4,7 +4,7 @@ import br.com.webflux.model_webflux.domain.exception.BusinessException;
 
 import java.util.UUID;
 
-public record Pessoa(Long id, String nome, String cpf, String email, Integer idade) {
+public record Pessoa(String nome, String cpf, String email, Integer idade, String cep) {
   public Pessoa {
     if (nome == null || nome.isBlank()) {
       throw new BusinessException("Nome não pode ser nulo ou vazio");

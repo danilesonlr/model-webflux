@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler  {
 
   @ExceptionHandler(Exception.class)
   public Mono<ResponseEntity<ApiErro>> handleGenericException(Exception ex) {
