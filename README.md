@@ -1,17 +1,11 @@
 # model-webflux
-Modelo de programação reativa com webflux, utilizando arquitetura clean arch e mongoDB
-
-
-Docker compose para criar o banco de dados via docker
-
-
+Modelo de programação reativa com webflux, utilizando arquitetura clean arch e banco de dados não relacional mongoDB
 
 # Executar docker componse
 docker-compose -f mongo-compose.yaml up -d
 
 # Rodar de forma interativa
 docker exec -it meu-mongo mongosh -u admin -p senha123 --authenticationDatabase admin
-
 
 # Acessar colletion/criar database
 use springWebFlux
@@ -29,8 +23,7 @@ db.createUser({
   roles: [ { role: "readWrite", db: "springWebFlux" } ]
 })
 
-# Acessar no mongoDB compass 
-
+# Acessar no mongoDB compass (opcional ambiente gráfico)
 mongodb://admin:senha123@localhost:27017/?authSource=admin
 
 # Acessar aplicação
