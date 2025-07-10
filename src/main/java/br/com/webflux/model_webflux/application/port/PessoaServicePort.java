@@ -6,6 +6,7 @@ import br.com.webflux.model_webflux.domain.entities.Pessoa;
 public interface PessoaServicePort {
   Object save(Pessoa pessoa);
   Object findAll();
-  void delete(Pessoa pessoa);
-  Object update(Pessoa pessoa);
+  Object delete(String id);
+  Object update(String id, Pessoa pessoa);
+  Object findById(String id);
 }

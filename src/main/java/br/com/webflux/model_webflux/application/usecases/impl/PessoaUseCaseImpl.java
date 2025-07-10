@@ -6,29 +6,36 @@ import br.com.webflux.model_webflux.domain.entities.Pessoa;
 
 public class PessoaUseCaseImpl implements PessoaUseCase {
 
-  private PessoaServicePort pessoaRepositoryGateway;
+  private PessoaServicePort pessoaServicePort;
 
   public PessoaUseCaseImpl(PessoaServicePort pessoaRepositoryGateway) {
-    this.pessoaRepositoryGateway = pessoaRepositoryGateway;
+    this.pessoaServicePort = pessoaRepositoryGateway;
   }
 
   @Override
   public Object save(Pessoa pessoa) {
-    return pessoaRepositoryGateway.save(pessoa);
+    return pessoaServicePort.save(pessoa);
   }
 
   @Override
   public Object findAll() {
-    return pessoaRepositoryGateway.findAll();
+    return pessoaServicePort.findAll();
   }
 
   @Override
-  public void delete(Pessoa pessoa) {
-
+  public Object delete(String id) {
+    return pessoaServicePort.delete(id);
   }
 
   @Override
-  public Object update(Pessoa pessoa) {
-    return null;
+  public Object update(String id, Pessoa pessoa) {
+    return pessoaServicePort.update(id, pessoa);
   }
+
+  @Override
+  public Object findById(String id) {
+    return pessoaServicePort.findById(id);
+  }
+
+
 }

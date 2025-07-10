@@ -2,6 +2,7 @@ package br.com.webflux.model_webflux.infrastructure.adapter;
 
 import br.com.webflux.model_webflux.application.port.PessoaServicePort;
 import br.com.webflux.model_webflux.domain.entities.Pessoa;
+import br.com.webflux.model_webflux.domain.exception.BusinessException;
 import br.com.webflux.model_webflux.infrastructure.integration.ViaCepClientClient;
 import br.com.webflux.model_webflux.infrastructure.entity.PessoaEntity;
 import br.com.webflux.model_webflux.infrastructure.mapper.EnderecoMapper;
@@ -29,11 +30,13 @@ public class PessoaServiceAdapter implements PessoaServicePort {
     return enderecoRepository.findByCep(pessoa.endereco().cep())
         .switchIfEmpty(
             viaCepClientAdapter.buscarEndereco(pessoa.endereco().cep())
-                .flatMap( endereco -> enderecoRepository.save(EnderecoMapper.enderecoToEntity(endereco)))
+                .onErrorMap(error -> new BusinessException("Erro ao buscar endereço.", error))
+                .flatMap(endereco -> enderecoRepository.save(EnderecoMapper.enderecoToEntity(endereco)))
         )
         .flatMap(endereco -> {
+
           PessoaEntity pessoaEntity =
-              new PessoaEntity(null, pessoa.cpf(), pessoa.nome(), pessoa.email(), pessoa.idade(),
+              new PessoaEntity(null, pessoa.nome(), pessoa.cpf(), pessoa.email(), pessoa.idade(),
                   pessoa.endereco().cep());
           return pessoaRepository.save(pessoaEntity);
         })
@@ -62,12 +65,57 @@ public class PessoaServiceAdapter implements PessoaServicePort {
   }
 
   @Override
-  public void delete(Pessoa pessoa) {
-
+  public Mono<Void> delete(String id) {
+    return pessoaRepository.deleteById(id)
+        .switchIfEmpty(Mono.error(new BusinessException("Nenhuma pessoa encontrada!")))
+        .doOnSuccess(entity -> log.info("Pessoa removida com sucesso!"));
   }
 
   @Override
-  public Object update(Pessoa pessoa) {
-    return null;
+  public Mono<Pessoa> update(String id, Pessoa pessoa) {
+    return pessoaRepository.findById(id)
+        .switchIfEmpty(Mono.error(new BusinessException("Nenhuma pessoa encontrada!")))
+        .flatMap(p ->
+            enderecoRepository.findByCep(pessoa.endereco().cep())
+                .switchIfEmpty(
+                    viaCepClientAdapter.buscarEndereco(pessoa.endereco().cep())
+                        .flatMap(endereco -> enderecoRepository.save(EnderecoMapper.enderecoToEntity(endereco)))
+                )
+                .flatMap(endereco -> {
+                  PessoaEntity pessoaEntity = new PessoaEntity(
+                      id,
+                      pessoa.nome(),
+                      pessoa.cpf(),
+                      pessoa.email(),
+                      pessoa.idade(),
+                      endereco.cep()
+                  );
+                  return pessoaRepository.save(pessoaEntity);
+                })
+        )
+        .map(PessoaMapper::entityToEntitie)
+        .doOnSuccess(entity -> log.info("Pessoa atualizada com sucesso!"));
   }
+
+  @Override
+  public Mono<Pessoa> findById(String id) {
+    return pessoaRepository.findById(id)
+        .switchIfEmpty(Mono.error(new BusinessException("Nenhuma pessoa encontrada para o ID: " + id)))
+        .flatMap(pessoa ->
+            enderecoRepository.findByCep(pessoa.cep())
+                .map(endereco -> {
+                  Pessoa pessoaComEndereco = new Pessoa(
+                      pessoa.id(),
+                      pessoa.nome(),
+                      pessoa.cpf(),
+                      pessoa.email(),
+                      pessoa.idade(),
+                      EnderecoMapper.entityToEndereco(endereco)
+                  );
+                  return pessoaComEndereco;
+                })
+        )
+        .doOnSuccess(entity -> log.info("Pessoa recuperada com sucesso!"));
+  }
+
 }
