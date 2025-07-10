@@ -2,7 +2,6 @@ package br.com.webflux.model_webflux.infrastructure.adapter;
 
 import br.com.webflux.model_webflux.application.port.EnderecoRepositoryPort;
 import br.com.webflux.model_webflux.domain.entities.Endereco;
-import br.com.webflux.model_webflux.infrastructure.entity.EnderecoEntity;
 import br.com.webflux.model_webflux.infrastructure.mapper.EnderecoMapper;
 import br.com.webflux.model_webflux.infrastructure.repository.EnderecoRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +18,15 @@ public class EnderecoRepositoryAdapter implements EnderecoRepositoryPort {
 
   @Override
   public Mono<Endereco> save(Endereco endereco) {
-    return enderecoRepository.save(EnderecoMapper.INSTANCE.enderecoToEntity(endereco))
-        .map(EnderecoMapper.INSTANCE::entityToEndereco)
+    return enderecoRepository.save(EnderecoMapper.enderecoToEntity(endereco))
+        .map(EnderecoMapper::entityToEndereco)
         .doOnSuccess(entity -> log.info("Endereco salvo com sucesso!"));
   }
 
   @Override
   public Mono<Endereco> findByCep(String cep) {
     return enderecoRepository.findByCep(cep)
-        .map(EnderecoMapper.INSTANCE::entityToEndereco)
+        .map(EnderecoMapper::entityToEndereco)
         .doOnSuccess(entity -> log.info("Endereco recuperado com sucesso!"));
   }
 }

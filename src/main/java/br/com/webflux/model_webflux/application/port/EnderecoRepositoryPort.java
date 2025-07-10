@@ -5,5 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface EnderecoRepositoryPort {
   Mono<Endereco> save(Endereco endereco);
-  Object findByCep(String cep);
+  Mono<Endereco>  findByCep(String cep);
 }

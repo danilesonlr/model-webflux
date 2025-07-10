@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 //@Table("Pessoa")
 @Document(collection = "pessoa")
-public record PessoaEntity(String nome, String cpf, String email, Integer idade, String cep) {
+public record PessoaEntity(String id, String nome, String cpf, String email, Integer idade, String cep) {
 }

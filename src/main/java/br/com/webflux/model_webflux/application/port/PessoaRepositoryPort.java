@@ -1,9 +1,10 @@
 package br.com.webflux.model_webflux.application.port;
 
 import br.com.webflux.model_webflux.domain.entities.Pessoa;
+import reactor.core.publisher.Mono;
 
 
 public interface PessoaRepositoryPort {
-  Object save(Pessoa pessoa);
+  Mono<Pessoa> save(Pessoa pessoa);
   Object findAll();
 }

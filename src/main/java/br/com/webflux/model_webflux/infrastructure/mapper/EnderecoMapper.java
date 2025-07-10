@@ -2,15 +2,18 @@ package br.com.webflux.model_webflux.infrastructure.mapper;
 
 import br.com.webflux.model_webflux.domain.entities.Endereco;
 import br.com.webflux.model_webflux.infrastructure.entity.EnderecoEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
-public interface EnderecoMapper {
+public class EnderecoMapper {
 
-  EnderecoMapper INSTANCE = Mappers.getMapper(EnderecoMapper.class);
+  public static Endereco entityToEndereco(EnderecoEntity entity) {
+    return new Endereco( entity.id(),
+        entity.cep(), entity.logradouro(),
+        entity.localidade(), entity.uf());
+  }
 
-  Endereco entityToEndereco(EnderecoEntity entity);
-  EnderecoEntity enderecoToEntity(Endereco endereco);
+  public static EnderecoEntity enderecoToEntity(Endereco endereco) {
+    return new EnderecoEntity( endereco.id(),
+        endereco.cep(), endereco.logradouro(),
+        endereco.localidade(), endereco.uf());
+  }
 }
-

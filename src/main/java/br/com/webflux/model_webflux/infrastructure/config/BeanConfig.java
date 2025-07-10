@@ -20,8 +20,9 @@ public class BeanConfig {
   }
 
   @Bean
-  public PessoaUseCase getPessoaUseCase(PessoaRepositoryPort useCase) {
-    return new PessoaUseCaseImpl(useCase);
+  public PessoaUseCase getPessoaUseCase(PessoaRepositoryPort pessoaRepositoryPort,
+                                        EnderecoUseCase enderecoUseCase) {
+    return new PessoaUseCaseImpl(pessoaRepositoryPort, enderecoUseCase);
   }
 
 }

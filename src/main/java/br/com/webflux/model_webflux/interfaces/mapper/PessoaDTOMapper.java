@@ -1,14 +1,16 @@
 package br.com.webflux.model_webflux.interfaces.mapper;
 
+import br.com.webflux.model_webflux.domain.entities.Endereco;
 import br.com.webflux.model_webflux.domain.entities.Pessoa;
 import br.com.webflux.model_webflux.interfaces.dto.PessoaDTO;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
-public interface PessoaDTOMapper {
+public class PessoaDTOMapper {
 
-  PessoaDTOMapper INSTANCE = Mappers.getMapper(PessoaDTOMapper.class);
-  Pessoa pessoaToEntity(PessoaDTO pessoaDTO);
-  PessoaDTO pessoaEntityToDTO(Pessoa pessoaEntity);
+  public static Pessoa pessoaToEntity(PessoaDTO pessoaDTO) {
+    Endereco endereco = new Endereco(null, pessoaDTO.cep(), null, null, null);
+    return new Pessoa(null, pessoaDTO.nome(), pessoaDTO.cpf(),
+        pessoaDTO.email(), pessoaDTO.idade(),
+        endereco);
+  }
+
 }
