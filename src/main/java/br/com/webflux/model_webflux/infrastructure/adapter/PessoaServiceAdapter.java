@@ -1,7 +1,9 @@
 package br.com.webflux.model_webflux.infrastructure.adapter;
 
-import br.com.webflux.model_webflux.application.port.PessoaRepositoryPort;
+import br.com.webflux.model_webflux.application.port.PessoaServicePort;
 import br.com.webflux.model_webflux.domain.entities.Pessoa;
+import br.com.webflux.model_webflux.infrastructure.integration.ViaCepClientClient;
+import br.com.webflux.model_webflux.infrastructure.entity.PessoaEntity;
 import br.com.webflux.model_webflux.infrastructure.mapper.EnderecoMapper;
 import br.com.webflux.model_webflux.infrastructure.mapper.PessoaMapper;
 import br.com.webflux.model_webflux.infrastructure.repository.EnderecoRepository;
@@ -16,18 +18,27 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PessoaRepositoryAdapter implements PessoaRepositoryPort {
+public class PessoaServiceAdapter implements PessoaServicePort {
   private final PessoaRepository pessoaRepository;
   private final EnderecoRepository enderecoRepository;
+  private final ViaCepClientClient viaCepClientAdapter;
 
 
   @Override
   public Mono<Pessoa> save(Pessoa pessoa) {
-   return pessoaRepository.save(PessoaMapper.entitieToPessoaEntity(pessoa))
-       .thenReturn(pessoa)
-       .doOnSuccess(entity -> log.info("Pessoa salvo com sucesso!"));
-       //.doOnError(error -> log.error("Erro ao salvar pessoa: {}", error.getMessage(), error));
-       //.onErrorMap(error -> new RuntimeException(error.getMessage()));
+    return enderecoRepository.findByCep(pessoa.endereco().cep())
+        .switchIfEmpty(
+            viaCepClientAdapter.buscarEndereco(pessoa.endereco().cep())
+                .flatMap( endereco -> enderecoRepository.save(EnderecoMapper.enderecoToEntity(endereco)))
+        )
+        .flatMap(endereco -> {
+          PessoaEntity pessoaEntity =
+              new PessoaEntity(null, pessoa.cpf(), pessoa.nome(), pessoa.email(), pessoa.idade(),
+                  pessoa.endereco().cep());
+          return pessoaRepository.save(pessoaEntity);
+        })
+        .map(PessoaMapper::entityToEntitie)
+        .doOnSuccess(entity -> log.info("Pessoa salvo com sucesso!"));
   }
 
   @Override
@@ -48,5 +59,15 @@ public class PessoaRepositoryAdapter implements PessoaRepositoryPort {
                 })
         )
         .doOnComplete(() -> log.info("Pessoa lista com sucesso!"));
+  }
+
+  @Override
+  public void delete(Pessoa pessoa) {
+
+  }
+
+  @Override
+  public Object update(Pessoa pessoa) {
+    return null;
   }
 }

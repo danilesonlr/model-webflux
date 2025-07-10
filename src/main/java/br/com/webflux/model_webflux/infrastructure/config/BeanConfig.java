@@ -1,12 +1,8 @@
 package br.com.webflux.model_webflux.infrastructure.config;
 
-import br.com.webflux.model_webflux.application.EnderecoUseCase;
-import br.com.webflux.model_webflux.application.PessoaUseCase;
-import br.com.webflux.model_webflux.application.impl.EnderecoUseCaseImpl;
-import br.com.webflux.model_webflux.application.port.EnderecoRepositoryPort;
-import br.com.webflux.model_webflux.application.port.PessoaRepositoryPort;
-import br.com.webflux.model_webflux.application.impl.PessoaUseCaseImpl;
-import br.com.webflux.model_webflux.application.port.ViaCepPort;
+import br.com.webflux.model_webflux.application.usecases.PessoaUseCase;
+import br.com.webflux.model_webflux.application.port.PessoaServicePort;
+import br.com.webflux.model_webflux.application.usecases.impl.PessoaUseCaseImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,15 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfig {
 
   @Bean
-  public EnderecoUseCase getEnderecoUseCase(ViaCepPort viaCepPort,
-                                            EnderecoRepositoryPort enderecoRepositoryPort) {
-    return new EnderecoUseCaseImpl(viaCepPort, enderecoRepositoryPort);
-  }
-
-  @Bean
-  public PessoaUseCase getPessoaUseCase(PessoaRepositoryPort pessoaRepositoryPort,
-                                        EnderecoUseCase enderecoUseCase) {
-    return new PessoaUseCaseImpl(pessoaRepositoryPort, enderecoUseCase);
+  public PessoaUseCase getPessoaUseCase(PessoaServicePort pessoaRepositoryPort) {
+    return new PessoaUseCaseImpl(pessoaRepositoryPort);
   }
 
 }

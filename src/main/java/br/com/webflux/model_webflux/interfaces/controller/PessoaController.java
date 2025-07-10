@@ -1,7 +1,6 @@
 package br.com.webflux.model_webflux.interfaces.controller;
 
-import br.com.webflux.model_webflux.application.EnderecoUseCase;
-import br.com.webflux.model_webflux.application.PessoaUseCase;
+import br.com.webflux.model_webflux.application.usecases.PessoaUseCase;
 import br.com.webflux.model_webflux.interfaces.dto.PessoaDTO;
 import br.com.webflux.model_webflux.interfaces.mapper.PessoaDTOMapper;
 import io.swagger.v3.oas.annotations.Operation;
