@@ -1,6 +1,10 @@
 # model-webflux
 Modelo de programação reativa com webflux, utilizando arquitetura clean arch e banco de dados não relacional mongoDB
 
+# Documentação spring webflux
+
+https://projectreactor.io/docs/core/release/api/reactor/core/publisher/package-summary.html
+
 # Executar docker componse
 docker-compose -f mongo-compose.yaml up -d
 
