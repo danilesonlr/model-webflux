@@ -1,6 +1,8 @@
 # model-webflux
 
-Modelo de programação reativa com webflux, utilizando arquitetura clean arch e banco de dados não relacional mongoDB
+Modelo de programação reativa com webflux, utilizando arquitetura clean arch e banco de dados não relacional mongoDB.
+Foi criado um fluxo aparte para produzir e consumir messagem utilizando kafka reativo.
+
 
 # Documentação spring webflux
 
