@@ -31,4 +31,6 @@ public class PessoaUseCase {
   public Object findById(String id) {
     return pessoaServicePort.findById(id);
   }
+
+  public Object producer (String message) {return pessoaServicePort.producer(message);}
 }

@@ -23,9 +23,12 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'io.r2dbc:r2dbc-h2'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	//TESTE
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
 
 
 	/*IMPLEMENTACAO LOMBOK*/
@@ -48,6 +51,11 @@ dependencies {
 
 	//MongoDB
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+
+
+	//kafka
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'io.projectreactor.kafka:reactor-kafka:1.3.22'
 }
 
 tasks.named('test') {

@@ -5,6 +5,7 @@ import br.com.webflux.model_webflux.domain.entities.Pessoa;
 import br.com.webflux.model_webflux.domain.exception.BusinessException;
 import br.com.webflux.model_webflux.infrastructure.integration.ViaCepClientClient;
 import br.com.webflux.model_webflux.infrastructure.entity.PessoaEntity;
+import br.com.webflux.model_webflux.infrastructure.kafka.Producer;
 import br.com.webflux.model_webflux.infrastructure.mapper.EnderecoMapper;
 import br.com.webflux.model_webflux.infrastructure.mapper.PessoaMapper;
 import br.com.webflux.model_webflux.infrastructure.repository.EnderecoRepository;
@@ -23,6 +24,7 @@ public class PessoaServiceAdapter implements PessoaServicePort {
   private final PessoaRepository pessoaRepository;
   private final EnderecoRepository enderecoRepository;
   private final ViaCepClientClient viaCepClientAdapter;
+  private final Producer producer;
 
 
   @Override
@@ -116,6 +118,11 @@ public class PessoaServiceAdapter implements PessoaServicePort {
                 })
         )
         .doOnSuccess(entity -> log.info("Pessoa recuperada com sucesso!"));
+  }
+
+  @Override
+  public Mono<Void> producer(String message) {
+    return producer.sendMessageReactive(message);
   }
 
 }

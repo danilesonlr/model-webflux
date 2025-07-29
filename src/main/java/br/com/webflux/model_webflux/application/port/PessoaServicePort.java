@@ -9,4 +9,5 @@ public interface PessoaServicePort {
   Object delete(String id);
   Object update(String id, Pessoa pessoa);
   Object findById(String id);
+  Object producer(String message);
 }
