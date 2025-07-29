@@ -16,10 +16,11 @@ public class Producer {
   com Kafka reativo (usando reactor-kafka), você precisa configurar o KafkaSender manualmente.*/
   private final KafkaSender<String, String> kafkaSender;
 
-  public Mono<Void> sendMessageReactive(String msg) {
+  //fila pessoa_teste
+  public Mono<Void> sendMessageReactive(String topic, String msg) {
     return kafkaSender.send(
         Mono.just(SenderRecord.create(
-            "pessoa_teste", // Tópico
+            topic, // Tópico
             null, // Partition (null = Kafka decide)
             System.currentTimeMillis(), // Timestamp
             null, // Key (opcional)

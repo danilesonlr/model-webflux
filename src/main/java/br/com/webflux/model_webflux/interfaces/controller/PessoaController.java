@@ -55,9 +55,15 @@ public class PessoaController {
     return pessoaUseCase.update(id, PessoaDTOMapper.pessoaToEntity(pessoaDTO));
   }
 
-  @PostMapping("/producer")
-  @Operation(summary = "Producer fila", description = "Producer mensagem na fila kafka")
-  public Object producer(String message) {
-    return pessoaUseCase.producer(message);
+  @PostMapping("/producer/pessoa")
+  @Operation(summary = "Producer fila", description = "Producer pessoa mensagem na fila kafka")
+  public Object producerPessoa(String message) {
+    return pessoaUseCase.producerFilaPessoa(message);
+  }
+
+  @PostMapping("/producer/empresa")
+  @Operation(summary = "Producer fila", description = "Producer empresa mensagem na fila kafka")
+  public Object producerEmpresa(String message) {
+    return pessoaUseCase.producerFilaEmpresa(message);
   }
 }

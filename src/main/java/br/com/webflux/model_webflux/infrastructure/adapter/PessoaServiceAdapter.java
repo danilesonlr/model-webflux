@@ -6,6 +6,7 @@ import br.com.webflux.model_webflux.domain.exception.BusinessException;
 import br.com.webflux.model_webflux.infrastructure.integration.ViaCepClientClient;
 import br.com.webflux.model_webflux.infrastructure.entity.PessoaEntity;
 import br.com.webflux.model_webflux.infrastructure.kafka.Producer;
+import br.com.webflux.model_webflux.infrastructure.kafka.enums.FilasKafkaEnum;
 import br.com.webflux.model_webflux.infrastructure.mapper.EnderecoMapper;
 import br.com.webflux.model_webflux.infrastructure.mapper.PessoaMapper;
 import br.com.webflux.model_webflux.infrastructure.repository.EnderecoRepository;
@@ -121,8 +122,13 @@ public class PessoaServiceAdapter implements PessoaServicePort {
   }
 
   @Override
-  public Mono<Void> producer(String message) {
-    return producer.sendMessageReactive(message);
+  public Object producerPessoa(String message) {
+    return producer.sendMessageReactive(FilasKafkaEnum.PESSOA.getValue(), message);
+  }
+
+  @Override
+  public Object producerEmpresa(String message) {
+    return producer.sendMessageReactive(FilasKafkaEnum.EMPRESA.getValue(), message);
   }
 
 }
